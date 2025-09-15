@@ -1,6 +1,8 @@
+//import scanner class which is use to take input from user
 import java.util.Scanner;
 
-///create class
+
+//create class
 public class Table{
 
 //main function
