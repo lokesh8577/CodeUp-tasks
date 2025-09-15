@@ -1,12 +1,17 @@
-//create class
+import java.util.Scanner;
+
+///create class
 public class Table{
 
 //main function
 public static void main(String[] args){
 
+Scanner sc = new Scanner(System.in);
 
-//variable declare
-int n = 5;
+System.out.print("Enter a number which table you want to print : ");
+
+//variable declare and taking input
+int n = sc.nextInt();;
 
 //fuunction calling
 print_table(n);
