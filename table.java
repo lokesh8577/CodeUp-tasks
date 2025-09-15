@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 
 //create class
-public class Table{
+public class table{
 
 //main function
 public static void main(String[] args){
