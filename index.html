@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFiesta 4.0 - The Ultimate Hackathon</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <style>
+       :root {
+    --primary: #0ea5e9;      /* Sky Blue */
+    --primary-light: #38bdf8;
+    --primary-dark: #0369a1;
+    --secondary: #22c55e;    /* Neon Green */
+    --accent: #f43f5e;       /* Neon Pink */
+    --dark: #0a0a0a;
+    --darker: #000000;
+    --light: #e2e8f0;
+    --gray: #71717a;
+}
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.04) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.04) 0%, transparent 25%);
+        }
+        
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a202c 100%);
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.8);
+        }
+        
+        #bg-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            padding-right: 100%;
+            top: 0;
+            left: 0;
+        }
+        
+        #bg-canvas-container {
+            position: relative;
+            height: 100%;
+        }
+        
+        /* Section Styling */
+        .section-gradient {
+            background: linear-gradient(to bottom, var(--darker), var(--dark));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 75% 25%, rgba(79, 70, 229, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 25% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+        
+        .faq-question {
+            padding: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--light);
+        }
+        
+        .faq-answer {
+            padding: 0 1.8rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 0 1.8rem 1.8rem;
+        }
+        
+        /* Footer Styling */
+        footer {
+            background: var(--darker);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        /* Custom animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite;
+        }
+        
+        /* Timeline styling */
+        .timeline-dot {
+            background: var(--dark);
+            border: 2px solid var(--primary);
+            z-index: 10;
+        }
+        
+        /* Prize cards */
+        .prize-card {
+            transition: all 0.3s ease;
+        }
+        
+        .prize-card:hover {
+            transform: translateY(-5px);
+        }
+        /* General responsive improvements */
+@media (max-width: 1024px) {
+  /* Timeline adjustments */
+  .relative.before\\:absolute.before\\:inset-0.before\\:ml-5:before {
+    left: 1.5rem;
+  }
+  
+  /* Prize cards stack on mobile */
+  #prizes .grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* FAQ spacing */
+  .faq-question {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Section padding reduction */
+  .section-gradient {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Sponsor boxes stack */
+  #sponsors .lg\\:grid-cols-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  /* Theme tags adjustment */
+  #themes .flex-wrap {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  #themes .flex-wrap span {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+/* General responsive improvements */
+@media (max-width: 1024px) {
+  /* Timeline adjustments */
+  .relative.before\\:absolute.before\\:inset-0.before\\:ml-5:before {
+    left: 1.5rem;
+  }
+  
+  /* Prize cards stack on mobile */
+  #prizes .grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  /* FAQ spacing */
+  .faq-question {
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Section padding reduction */
+  .section-gradient {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Sponsor boxes stack */
+  #sponsors .lg\\:grid-cols-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  /* Theme tags adjustment */
+  #themes .flex-wrap {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  #themes .flex-wrap span {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-bold text-white">
+                    <span class="font-mono text-indigo-400">&lt;</span>CodeFiesta 4.0<span class="font-mono text-indigo-400">/&gt;</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-gray-300 hover:text-indigo-400 transition">Home</a>
+                    <a href="#about" class="text-gray-300 hover:text-indigo-400 transition">About</a>
+                    <a href="#schedule" class="text-gray-300 hover:text-indigo-400 transition">Schedule</a>
+                    <a href="#prizes" class="text-gray-300 hover:text-indigo-400 transition">Prizes</a>
+                    <a href="#sponsors" class="text-gray-300 hover:text-indigo-400 transition">Sponsors</a>
+                    <a href="#faq" class="text-gray-300 hover:text-indigo-400 transition">FAQs</a>
+                    <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition">Contact</a>
+                </div>
+                <a href="#" class="hidden md:block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition-transform duration-300 hover:scale-105">
+                    Register Now
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4">
+                <a href="#" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">Home</a>
+                <a href="#about" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">About</a>
+                <a href="#schedule" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">Schedule</a>
+                <a href="#prizes" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">Prizes</a>
+                <a href="#sponsors" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">Sponsors</a>
+                <a href="#faq" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">FAQs</a>
+                <a href="#contact" class="block py-2 px-4 text-sm text-gray-300 hover:bg-gray-800 rounded">Contact</a>
+                <a href="#" class="block mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg text-center">Register Now</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="hero-gradient">
+        <div class="container mx-auto px-6 h-full">
+            <div class="flex flex-col md:flex-row items-center h-screen">
+                <div class="relative z-10 md:w-1/2 text-center md:text-left py-16 md:py-0" style="margin-top: 60px;">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-4" data-aos="fade-right">
+                        <span class="font-mono text-lg md:text-xl text-indigo-400 block mb-2"></span>
+                        CodeFiesta 4.0 Hackathon
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 max-w-xl mx-auto md:mx-0 mb-8" data-aos="fade-right" data-aos-delay="200">
+                        Join 1000+ of the brightest student innovators from across India for a 24-hour marathon of coding, creativity, and collaboration at GIT Jaipur. Let's build the future, together.
+                    </p>
+                    <div id="countdown-timer" class="flex justify-center md:justify-start gap-4 md:gap-8 my-8" data-aos="fade-right" data-aos-delay="400">
+                        <div class="text-center p-2 rounded-lg glassmorphism w-24"><div id="days" class="font-mono text-3xl md:text-5xl font-bold text-white">00</div><span class="text-xs text-gray-400 uppercase">Days</span></div>
+                        <div class="text-center p-2 rounded-lg glassmorphism w-24"><div id="hours" class="font-mono text-3xl md:text-5xl font-bold text-white">00</div><span class="text-xs text-gray-400 uppercase">Hours</span></div>
+                        <div class="text-center p-2 rounded-lg glassmorphism w-24"><div id="minutes" class="font-mono text-3xl md:text-5xl font-bold text-white">00</div><span class="text-xs text-gray-400 uppercase">Minutes</span></div>
+                        <div class="text-center p-2 rounded-lg glassmorphism w-24"><div id="seconds" class="font-mono text-3xl md:text-5xl font-bold text-white">00</div><span class="text-xs text-gray-400 uppercase">Seconds</span></div>
+                    </div>
+                    <div class="flex justify-center md:justify-start gap-4 mt-12" data-aos="fade-right" data-aos-delay="600">
+                        <a href="#" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105 btn-glow">Register For Free</a>
+                    </div>
+                </div>
+                <div id="bg-canvas-container" class="w-full md:w-1/2 h-full">
+                    <canvas id="bg-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="about" class="section-gradient py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">About CodeFiesta 4.0</h2>
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-2/3 text-gray-300 text-lg space-y-4" data-aos="fade-right">
+                    <p>Launched in 2022, CodeFiesta has rapidly evolved into a celebration of innovation, passion, and creativity—bringing together the brightest young minds to push the boundaries of technology. With three electrifying editions behind us—CodeFiesta 1.0 with 100+ teams, CodeFiesta 2.0 with 120+ teams, and the record-breaking CodeFiesta 3.0 with 200+ teams—the legacy now continues with an even more ambitious chapter: CodeFiesta 4.0.</p>
+                    <p>This year promises to be bigger, bolder, and more thrilling than ever before. Over a nonstop 24-hour hackathon, brilliant ideas will transform into real-world solutions as imagination collides with innovation. More than just a competition, CodeFiesta is an unforgettable journey of coding, creativity, and collaboration.</p>
+                    <p>Whether you are a seasoned coder or a passionate beginner, CodeFiesta 4.0 is your stage to test your limits, showcase your talent, and build solutions that truly matter. The energy will be electrifying, the challenges extraordinary, and the rewards unforgettable. CodeFiesta 4.0 is not just an event—it is where innovation is born, collaborations thrive, and legends are made.</p>
+                </div>
+                <div class="lg:w-1/3 grid grid-cols-2 gap-6" data-aos="fade-left">
+                     <div class="glassmorphism p-6 rounded-lg text-center hover:border-indigo-400 transition-all duration-300">
+                        <i class="fas fa-users text-indigo-400 text-4xl mb-3"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Collaboration</h3>
+                        <p class="text-gray-400 text-sm">Team up to build amazing projects</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg text-center hover:border-green-400 transition-all duration-300">
+                        <i class="fas fa-lightbulb text-green-400 text-4xl mb-3"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Innovation</h3>
+                        <p class="text-gray-400 text-sm">Create unique solutions to real problems</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg text-center hover:border-cyan-400 transition-all duration-300">
+                        <i class="fas fa-graduation-cap text-cyan-400 text-4xl mb-3"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Learning</h3>
+                        <p class="text-gray-400 text-sm">Attend workshops from industry experts</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg text-center hover:border-pink-400 transition-all duration-300">
+                        <i class="fas fa-network-wired text-pink-400 text-4xl mb-3"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Networking</h3>
+                        <p class="text-gray-400 text-sm">Meet professionals and like-minded peers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section id="themes" class="section-gradient pt-10 pb-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">Tracks & Technologies</h2>
+            <div class="flex flex-wrap justify-center gap-4" data-aos="zoom-in">
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Web 3.0</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">FinTech</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">HealthTech</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">EdTech</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Blockchain</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Cybersecurity</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Artificial Intelligence</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Robotics</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Drones</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Sustainability</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">Smart Cities</span>
+                <span class="bg-gray-800 text-indigo-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-700">SpaceTech</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="schedule" class="section-gradient py-20">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">Event Schedule</h2>
+            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-indigo-900 before:to-emerald-900 md:before:mx-auto md:before:ml-0">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-indigo-500 bg-gray-800 group-hover:bg-indigo-500 text-slate-500 group-hover:text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 timeline-dot">
+                        <i class="fas fa-flag-checkered"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glassmorphism p-4 rounded-lg group-hover:border-indigo-400 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white">Opening Ceremony</h3>
+                            <time class="font-mono text-sm text-indigo-300">9:00 AM, Oct 9</time>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Kick-off, keynote speeches, and theme announcement.</p>
+                    </div>
+                </div>
+                
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-indigo-500 bg-gray-800 group-hover:bg-indigo-500 text-slate-500 group-hover:text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 timeline-dot">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glassmorphism p-4 rounded-lg group-hover:border-indigo-400 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white">Hacking Begins</h3>
+                            <time class="font-mono text-sm text-indigo-300">10:00 AM, Oct 9</time>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Let the 24-hour coding marathon commence!</p>
+                    </div>
+                </div>
+                
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-indigo-500 bg-gray-800 group-hover:bg-indigo-500 text-slate-500 group-hover:text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 timeline-dot">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glassmorphism p-4 rounded-lg group-hover:border-indigo-400 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white">Tech Workshops</h3>
+                            <time class="font-mono text-sm text-indigo-300">2:00 PM, Oct 9</time>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Sessions on AI, Web3, and Cloud by industry experts.</p>
+                    </div>
+                </div>
+                
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group" data-aos="fade-up">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border border-indigo-500 bg-gray-800 group-hover:bg-indigo-500 text-slate-500 group-hover:text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 timeline-dot">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glassmorphism p-4 rounded-lg group-hover:border-indigo-400 transition-all duration-300">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white">Project Submissions</h3>
+                            <time class="font-mono text-sm text-indigo-300">10:00 AM, Oct 10</time>
+                        </div>
+                        <p class="text-sm text-gray-400 mt-1">Final call for all project submissions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="prizes" class="section-gradient py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-4" data-aos="fade-up">Prizes & Recognition</h2>
+            <p class="text-center text-xl text-gray-300 mb-12" data-aos="fade-up">Prize pool worth over <span class="font-bold text-emerald-400">₹7,00,000</span> in cash rewards & goodies!</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glassmorphism p-8 rounded-lg text-center border-2 border-yellow-400 prize-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-trophy text-yellow-400 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">1st Place</h3>
+                    <p class="text-4xl font-bold text-yellow-400 mb-4">$5,000</p>
+                    <p class="text-gray-300">Plus exclusive swag, mentorship sessions, and a feature on our blog.</p>
+                </div>
+                
+                <div class="glassmorphism p-8 rounded-lg text-center border-2 border-gray-400 prize-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-medal text-gray-400 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">2nd Place</h3>
+                    <p class="text-4xl font-bold text-gray-400 mb-4">$2,500</p>
+                    <p class="text-gray-300">Plus exclusive swag and mentorship sessions.</p>
+                </div>
+                
+                <div class="glassmorphism p-8 rounded-lg text-center border-2 border-orange-400 prize-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-award text-orange-400 text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">3rd Place</h3>
+                    <p class="text-4xl font-bold text-orange-400 mb-4">$1,000</p>
+                    <p class="text-gray-300">Plus exclusive swag packs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsors" class="section-gradient py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">Partner With Us</h2>
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-16" data-aos="fade-up">
+                    <div>
+                        <i class="fas fa-calendar-alt text-emerald-400 text-4xl mb-3"></i>
+                        <h4 class="text-xl font-bold text-white">9-10 Oct 2025</h4>
+                        <p class="text-gray-400">Date</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-map-marker-alt text-emerald-400 text-4xl mb-3"></i>
+                        <h4 class="text-xl font-bold text-white">GIT, Jaipur</h4>
+                        <p class="text-gray-400">Venue</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-users text-emerald-400 text-4xl mb-3"></i>
+                        <h4 class="text-xl font-bold text-white">1000+ Students</h4>
+                        <p class="text-gray-400">Participants</p>
+                    </div>
+                     <div>
+                        <i class="fas fa-trophy text-emerald-400 text-4xl mb-3"></i>
+                        <h4 class="text-xl font-bold text-white">₹7,00,000+</h4>
+                        <p class="text-gray-400">Prize Pool</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl md:text-3xl font-bold text-center text-white mb-10" data-aos="fade-up">Why Sponsor CodeFiesta 4.0?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <div class="glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-user-tie text-indigo-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Access Top Talent</h4>
+                        <p class="text-gray-400 text-sm">Directly engage with and recruit the best student developers for internships and full-time roles.</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-bullhorn text-indigo-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Boost Brand Visibility</h4>
+                        <p class="text-gray-400 text-sm">Showcase your brand to over 1000+ tech students, faculty, and a wider online audience.</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-comments text-indigo-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Engage Innovators</h4>
+                        <p class="text-gray-400 text-sm">Connect with participants as judges, mentors, or by hosting workshops and challenges.</p>
+                    </div>
+                    <div class="glassmorphism p-6 rounded-lg" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-hands-helping text-indigo-400 text-3xl mb-4"></i>
+                        <h4 class="text-lg font-bold text-white mb-2">Strengthen CSR</h4>
+                        <p class="text-gray-400 text-sm">Demonstrate your commitment to fostering youth innovation and supporting the tech community.</p>
+                    </div>
+                </div>
+
+                <div class="text-center" data-aos="fade-up">
+                    <p class="text-gray-300 text-lg mb-6">Our sponsorship packages are flexible and can be customized to align with your company’s marketing, recruitment, and innovation goals.</p>
+                    <a href="mailto:hello@codefista.com" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105 btn-glow" style="--tw-shadow-color: var(--secondary); box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);">Become a Sponsor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section-gradient py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12" data-aos="fade-up">Frequently Asked Questions</h2>
+            <p class="text-lg text-center text-gray-400 mb-12 max-w-2xl mx-auto" data-aos="fade-up">Find answers to common questions about the hackathon</p>
+            
+            <div class="faq-container">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        Who can participate in CodeFiesta?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>CodeFiesta is open to all students currently enrolled in a college or university. Both undergraduate and graduate students are welcome to participate. Teams can have 2-4 members.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        Do I need to have prior experience?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While some coding experience is helpful, we welcome participants of all skill levels. We'll have mentors available throughout the event to help you with your project, and there will be workshops for beginners.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        What should I bring to the hackathon?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You should bring your laptop, charger, any hardware you plan to use, and a valid student ID. We recommend bringing a change of clothes and toiletries if you plan to stay overnight.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        How much does it cost to participate?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>CodeFiesta is completely free for all participants! We'll provide meals, snacks, and beverages throughout the event, along with swag and prizes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        What if I don't have a team?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No problem! We'll have team formation activities at the beginning of the event to help individuals find teams. You can also participate solo if you prefer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-gradient py-20">
+        <div class="container mx-auto px-6 text-center max-w-3xl" data-aos="zoom-in">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Get In Touch</h2>
+            <p class="text-gray-400 mb-8">Have questions? We'd love to hear from you. Reach out to us anytime!</p>
+            <a href="mailto:hello@codefista.com" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-transform duration-300 hover:scale-105 btn-glow">hello@codefista.com</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#" class="footer-logo">
+                Code<span>Fiesta 4.0</span>
+            </a>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#about">About</a>
+                <a href="#prizes">Prizes</a>
+                <a href="#schedule">Schedule</a>
+                <a href="#faq">FAQs</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 CodeFiesta 4.0 Hackathon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg-canvas'), alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.setZ(5);
+        
+        // Custom Shader Material
+        const vertexShader = `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+        const fragmentShader = `
+            uniform float u_time;
+            varying vec2 vUv;
+            void main() {
+                vec3 colorA = vec3(0.31, 0.27, 0.89); // Indigo
+                vec3 colorB = vec3(0.06, 0.72, 0.51); // Emerald
+                
+                float pct = abs(sin(vUv.y * 2.0 + u_time * 0.5));
+                vec3 finalColor = mix(colorA, colorB, pct);
+                
+                gl_FragColor = vec4(finalColor, 0.8);
+            }
+        `;
+        
+        const geometry = new THREE.TorusKnotGeometry(1.5, 0.5, 200, 32);
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_time: { value: 0.0 }
+            },
+            vertexShader,
+            fragmentShader,
+            wireframe: true,
+            transparent: true
+        });
+        const shape = new THREE.Mesh(geometry, material);
+        scene.add(shape);
+        
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+        
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        const clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            material.uniforms.u_time.value = elapsedTime;
+            shape.rotation.y += (mouseX * 0.5 - shape.rotation.y) * 0.05;
+            shape.rotation.x += (mouseY * 0.5 - shape.rotation.x) * 0.05;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+        
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const header = document.getElementById('header');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('bg-gray-900', window.scrollY > 50);
+            header.classList.toggle('bg-opacity-80', window.scrollY > 50);
+            header.classList.toggle('backdrop-blur-sm', window.scrollY > 50);
+        });
+        
+        // Countdown Timer
+        const hackathonDate = new Date("Oct 9, 2025 09:00:00").getTime();
+        const countdownFunction = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = hackathonDate - now;
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown-timer").innerHTML = "<div class='text-2xl md:text-4xl font-bold text-green-400'>The Hackathon has started!</div>";
+                return;
+            }
+            const format = (num) => num.toString().padStart(2, '0');
+            document.getElementById("days").innerText = format(Math.floor(distance / (1000 * 60 * 60 * 24)));
+            document.getElementById("hours").innerText = format(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            document.getElementById("minutes").innerText = format(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+            document.getElementById("seconds").innerText = format(Math.floor((distance % (1000 * 60)) / 1000));
+        }, 1000);
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', event => {
+                const faqItem = item.parentElement;
+                
+                // Close other open items
+                document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                    if(openItem !== faqItem) {
+                        openItem.classList.remove('open');
+                        openItem.querySelector('.faq-answer').classList.remove('active');
+                    }
+                });
+                
+                faqItem.classList.toggle('open');
+                const answer = faqItem.querySelector('.faq-answer');
+                answer.classList.toggle('active');
+                
+                // Rotate chevron icon
+                const icon = item.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+    </script>
+</body>
+</html>
