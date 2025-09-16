@@ -1,32 +1,36 @@
-//import scanner class which is use to take input from user
 import java.util.Scanner;
-
-
-//create class
-public class table{
-
-//main function
-public static void main(String[] args){
-
-Scanner sc = new Scanner(System.in);
-
-System.out.print("Enter a number which table you want to print : ");
-
-//variable declare and taking input
-int n = sc.nextInt();;
-
-//fuunction calling
-print_table(n);
+public class table {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int number = 0, range = 0;
+	while(true){
+        System.out.print("Enter the number: ");
+        if (sc.hasNextInt()) {
+            number = sc.nextInt();
+	break;
+        } else {
+            System.out.println("Enter number value only!");
+            sc.next();
+        }
 }
+   	while(true){
+        System.out.print("Enter the range: ");
+        if (sc.hasNextInt()) {
+            range = sc.nextInt();
+            break;
+        } else {
+            System.out.println("Enter number value only!");
+            sc.next();
+        }
+    }
+    
+
+        System.out.println("\nMultiplication Table of " + number + " up to " + range + ":");
+        for (int i = 1; i <= range; i++) {
+            System.out.println(number + " x " + i + " = " + (number * i));
+        }
 
 
-
-//function which print table
-public static void print_table(int n){
-
-//using for loop for print the table from 1 to 10
-for(int i=1;i<=10;i++){
-System.out.println(n+"*"+i+"="+n*i);
-}
+       sc.close();
 }
 }
