@@ -5,121 +5,123 @@
 
 public class MyString {
 
-
-    /* This program is used to extand characters in an input string with a perticular digit
+    /* This program is used to expand characters in an input string with a particular digit
         example. Input: "a1b4c3" 
         Output: "abbbbccc"
      */
+    public static String expandCharacters(String str) {
+        String expandedResult = "";
 
-    public static String expandCharacters(String inputString) {
-        String result = "";
-        for (int i = 0; i < inputString.length(); i += 2) {
-            char character = inputString.charAt(i);
-            int count = inputString.charAt(i + 1) - '0';
-            for (int j = 0; j < count; j++) {
-                result += character;
+        for (int pos = 0; pos < str.length(); pos += 2) {
+            char letter = str.charAt(pos);
+            int repeatCount = str.charAt(pos + 1) - '0';
+
+            for (int repetition = 0; repetition < repeatCount; repetition++) {
+                expandedResult += letter;
             }
         }
-        return result;
+        return expandedResult;
     }
 
-    /*  This program is used to print Frequency of a character from a input string
+    /*  This program is used to print frequency of a character from an input string
         example. Input: "aabcccdeee" 
         Output: "a2b1c3d1e3"
      */
+    public static String characterFrequency(String text) {
+        String frequencyResult = "";
+        int charCount = 1;
 
-    public static String characterFrequency(String inputString) {
-        String result = "";
-        int count = 1;
-        for (int i = 0; i < inputString.length(); i++) {
-            if (i + 1 < inputString.length() && inputString.charAt(i) == inputString.charAt(i + 1)) {
-                count++;
+        for (int index = 0; index < text.length(); index++) {
+            if (index + 1 < text.length() && text.charAt(index) == text.charAt(index + 1)) {
+                charCount++;
             } else {
-                result += inputString.charAt(i) + "" + count;
-                count = 1;
+                frequencyResult += text.charAt(index) + "" + charCount;
+                charCount = 1;
             }
         }
-        return result;
+        return frequencyResult;
     }
 
-    /* This program is used to check whether a input number is a prime number or not
+    /* This program is used to check whether an input number is a prime number or not
         example. Input: 21 
         Output: "The given number is NOT prime"  
      */
-
-    public static String isPrime(int number) {
-        if (number <= 1) {
+    public static String isPrime(int num) {
+        if (num <= 1) {
             return "The given number is NOT prime";
         }
-        for (int i = 2; i * i <= number; i++) {
-            if (number % i == 0) {
+
+        for (int divisor = 2; divisor * divisor <= num; divisor++) {
+            if (num % divisor == 0) {
                 return "The given number is NOT prime";
             }
         }
         return "The given number is PRIME";
     }
 
-    /*   This program is used to convert a input number to its word conversion
+    /*   This program is used to convert an input number to its word conversion
         example. Input: 51 
         Output: "fifty one" 
      */
-
-    public static String numberToWords(int number) {
-        if (number == 0) {
+    public static String numberToWords(int num) {
+        if (num == 0) {
             return "zero";
         }
 
-        String[] units = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-        String[] teens = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-            "sixteen", "seventeen", "eighteen", "nineteen"};
-        String[] tens = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+        String[] singleDigits = {"","one","two","three","four","five","six","seven","eight","nine"};
+        String[] teenNumbers = {"ten","eleven","twelve","thirteen","fourteen","fifteen",
+            "sixteen","seventeen","eighteen","nineteen"};
+        String[] tensPlace = {"","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"};
 
-        String words = "";
+        String wordResult = "";
 
-        if (number >= 100) {
-            words += units[number / 100] + " hundred";
-            number %= 100;
-            if (number > 0) {
-                words += " ";
+        if (num >= 100) {
+            wordResult += singleDigits[num / 100] + " hundred";
+            num %= 100;
+            if (num > 0) {
+                wordResult += " ";
             }
         }
-        if (number >= 20) {
-            words += tens[number / 10];
-            number %= 10;
-            if (number > 0) {
-                words += " ";
+
+        if (num >= 20) {
+            wordResult += tensPlace[num / 10];
+            num %= 10;
+            if (num > 0) {
+                wordResult += " ";
             }
-        } else if (number >= 10) {
-            words += teens[number - 10];
-            number = 0;
+        } else if (num >= 10) {
+            wordResult += teenNumbers[num - 10];
+            num = 0;
         }
-        if (number > 0 && number < 10) {
-            words += units[number];
+
+        if (num > 0 && num < 10) {
+            wordResult += singleDigits[num];
         }
-        return words;
+
+        return wordResult;
     }
 
     /*  This program is used to print the length of longest substring without repeating characters
         example. input: s = "abcabcbb" 
         Output: 3 
      */
-    
-    public static int longestUniqueSubstring(String inputString) {
-        int[] visited = new int[256];
-        for (int i = 0; i < 256; i++) {
-            visited[i] = -1;
+    public static int longestUniqueSubstring(String str) {
+        int[] lastSeenAt = new int[256];
+        for (int idx = 0; idx < 256; idx++) {
+            lastSeenAt[idx] = -1;
         }
 
-        int maxLength = 0, start = -1;
+        int maxLen = 0;
+        int windowStart = -1;
 
-        for (int i = 0; i < inputString.length(); i++) {
-            if (visited[inputString.charAt(i)] > start) {
-                start = visited[inputString.charAt(i)];
+        for (int currentPos = 0; currentPos < str.length(); currentPos++) {
+            if (lastSeenAt[str.charAt(currentPos)] > windowStart) {
+                windowStart = lastSeenAt[str.charAt(currentPos)];
             }
-            visited[inputString.charAt(i)] = i;
-            maxLength = Math.max(maxLength, i - start);
+            lastSeenAt[str.charAt(currentPos)] = currentPos;
+            maxLen = Math.max(maxLen, currentPos - windowStart);
         }
-        return maxLength;
+        return maxLen;
     }
 
     public static void main(String[] args) {
