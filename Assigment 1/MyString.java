@@ -2,106 +2,137 @@
     Name - Lokesh Prajapat
     Date - 16/9/25
  */
+import java.util.Scanner;
 
 public class MyString {
 
-    /* This program is used to expand characters in an input string with a particular digit
+    /* This method is used to expand characters in an input string with a particular digit
         example. Input: "a1b4c3" 
         Output: "abbbbccc"
      */
     public static String expandCharacters(String str) {
         String expandedResult = "";
-
-        for (int pos = 0; pos < str.length(); pos += 2) {
-            char letter = str.charAt(pos);
-            int repeatCount = str.charAt(pos + 1) - '0';
-
-            for (int repetition = 0; repetition < repeatCount; repetition++) {
+        int i = 0;
+        while (i < str.length()) {
+            char letter = str.charAt(i);
+            i++;
+            int repeatCount = 0;
+            while (i < str.length()) {
+                char c = str.charAt(i);
+                if (c >= '0' && c <= '9') {
+                    repeatCount = repeatCount * 10 + (c - '0');
+                    i++;
+                } else {
+                    break;
+                }
+            }
+            for (int j = 0; j < repeatCount; j++) {
                 expandedResult += letter;
             }
         }
         return expandedResult;
     }
 
-    /*  This program is used to print frequency of a character from an input string
+
+    /*  This method is used to print frequency of a character from an input string
         example. Input: "aabcccdeee" 
         Output: "a2b1c3d1e3"
      */
     public static String characterFrequency(String text) {
-        String frequencyResult = "";
-        int charCount = 1;
+        if (text == null || text.isEmpty()) {
+            return "";
+        }
 
-        for (int index = 0; index < text.length(); index++) {
-            if (index + 1 < text.length() && text.charAt(index) == text.charAt(index + 1)) {
-                charCount++;
-            } else {
-                frequencyResult += text.charAt(index) + "" + charCount;
-                charCount = 1;
+        String frequencyResult = "";
+
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+
+            boolean alreadyProcessed = false;
+            for (int j = 0; j < i; j++) {
+                if (text.charAt(j) == currentChar) {
+                    alreadyProcessed = true;
+                    break;
+                }
+            }
+
+            if (!alreadyProcessed) {
+                int count = 0;
+                for (int k = 0; k < text.length(); k++) {
+                    if (text.charAt(k) == currentChar) {
+                        count++;
+                    }
+                }
+                frequencyResult += currentChar + "" + count;
             }
         }
+
         return frequencyResult;
     }
 
-    /* This program is used to check whether an input number is a prime number or not
+    /* This method is used to check whether an input number is a prime number or not
         example. Input: 21 
         Output: "The given number is NOT prime"  
      */
-    public static String isPrime(int num) {
-        if (num <= 1) {
+    public static String isPrime(int number) {
+        if (number <= 1) {
             return "The given number is NOT prime";
         }
 
-        for (int divisor = 2; divisor * divisor <= num; divisor++) {
-            if (num % divisor == 0) {
+        for (int divisor = 2; divisor*divisor < number/2; divisor++) {
+            if (number % divisor == 0) {
                 return "The given number is NOT prime";
             }
         }
         return "The given number is PRIME";
     }
 
-    /*   This program is used to convert an input number to its word conversion
+    /*   This method is used to convert an input number to its word conversion
         example. Input: 51 
         Output: "fifty one" 
      */
-    public static String numberToWords(int num) {
-        if (num == 0) {
+    public static String numberToWords(int number) {
+        if (number == 0) {
             return "zero";
         }
+        if (number == 1000) {
+            return "One thousand";
+        }
 
-        String[] singleDigits = {"","one","two","three","four","five","six","seven","eight","nine"};
-        String[] teenNumbers = {"ten","eleven","twelve","thirteen","fourteen","fifteen",
-            "sixteen","seventeen","eighteen","nineteen"};
-        String[] tensPlace = {"","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"};
+        String[] singleDigits = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String[] teenNumbers = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+            "sixteen", "seventeen", "eighteen", "nineteen"};
+        String[] tensPlace = {"", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
 
         String wordResult = "";
 
-        if (num >= 100) {
-            wordResult += singleDigits[num / 100] + " hundred";
-            num %= 100;
-            if (num > 0) {
+        if (number >= 100) {
+            wordResult += singleDigits[number / 100] + " hundred";
+            number %= 100;
+            if (number > 0) {
                 wordResult += " ";
             }
         }
 
-        if (num >= 20) {
-            wordResult += tensPlace[num / 10];
-            num %= 10;
-            if (num > 0) {
+        if (number >= 20) {
+            wordResult += tensPlace[number / 10];
+            number %= 10;
+            if (number > 0) {
                 wordResult += " ";
             }
-        } else if (num >= 10) {
-            wordResult += teenNumbers[num - 10];
-            num = 0;
+        } else if (number >= 10) {
+            wordResult += teenNumbers[number - 10];
+            number = 0;
         }
 
-        if (num > 0 && num < 10) {
-            wordResult += singleDigits[num];
+        if (number > 0 && number < 10) {
+            wordResult += singleDigits[number];
         }
 
         return wordResult;
     }
 
-    /*  This program is used to print the length of longest substring without repeating characters
+    /*  This method is used to print the length of longest substring without repeating characters
         example. input: s = "abcabcbb" 
         Output: 3 
      */
@@ -125,10 +156,102 @@ public class MyString {
     }
 
     public static void main(String[] args) {
-        System.out.println(expandCharacters("a1b4c3"));
-        System.out.println(characterFrequency("aabcccdeee"));
-        System.out.println(isPrime(7));
-        System.out.println(numberToWords(848));
-        System.out.println(longestUniqueSubstring("abcabcbb"));
+        Scanner userInput = new Scanner(System.in);
+        int optionSelector;
+
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Expand Characters");
+            System.out.println("2. Character Frequency");
+            System.out.println("3. Check Prime");
+            System.out.println("4. Number to Words");
+            System.out.println("5. Longest Unique Substring");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option (1-6): ");
+
+            while (!userInput.hasNextInt()) {
+                System.out.print("Enter a valid option (1-6): ");
+                userInput.next();
+            }
+            optionSelector = userInput.nextInt();
+            userInput.nextLine();
+
+            switch (optionSelector) {
+                case 1:
+                    try {
+                        System.out.print("Enter string (e.g. a1b4c3): ");
+                        String expandInput = userInput.nextLine();
+                        System.out.println("Expanded String: " + expandCharacters(expandInput));
+                    } catch (Exception e) {
+                        System.out.println("Invalid input! Please enter in correct format like a1b2c3.");
+                    }
+                    break;
+
+                case 2:
+                    try {
+                        System.out.print("Enter string: ");
+                        String frequencyInput = userInput.nextLine();
+                        System.out.println("Character Frequency: " + characterFrequency(frequencyInput));
+                    } catch (Exception e) {
+                        System.out.println("Error! Please enter a valid string.");
+                    }
+                    break;
+
+                case 3:
+                    try {
+                        System.out.print("Enter number: ");
+                        if (userInput.hasNextInt()) {
+                            int primeInput = userInput.nextInt();
+                            userInput.nextLine();
+                            System.out.println(isPrime(primeInput));
+                        } else {
+                            System.out.println("Invalid input! Please enter a valid integer.");
+                            userInput.next();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error! Please enter a valid integer.");
+                    }
+                    break;
+
+                case 4:
+                    try {
+                        System.out.print("Enter number (1-1000): ");
+                        if (userInput.hasNextInt()) {
+                            int numberInput = userInput.nextInt();
+                            userInput.nextLine();
+                            if (numberInput < 1 || numberInput > 1000) {
+                                System.out.println("Number out of range! Enter between 1 and 1000.");
+                            } else {
+                                System.out.println("In Words: " + numberToWords(numberInput));
+                            }
+                        } else {
+                            System.out.println("Invalid input! Please enter an integer.");
+                            userInput.next();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error! Please enter a valid number.");
+                    }
+                    break;
+
+                case 5:
+                    try {
+                        System.out.print("Enter string: ");
+                        String uniqueInput = userInput.nextLine();
+                        System.out.println("Longest Unique Substring Length: " + longestUniqueSubstring(uniqueInput));
+                    } catch (Exception e) {
+                        System.out.println("Error! Please enter a valid string.");
+                    }
+                    break;
+
+                case 6:
+                    System.out.println("Exiting program. Goodbye!");
+                    userInput.close();
+                    return; // exit main method
+
+                default:
+                    System.out.println("Invalid choice! Please choose between 1 and 6.");
+                    break;
+            }
+        }
     }
 }
