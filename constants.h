@@ -1,0 +1,37 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+
+#define APP_TITLE            "\n=========== MAIN MENU ===========\n"
+#define EXIT_MESSAGE         "\n✅ Exiting program...\n"
+#define INVALID_OPTION_MSG   "❌ Invalid Option! Try again.\n"
+#define MENU_SELECT          "Select an option: "
+#define MENU_OPTION_1     "1. Find Pivot Index"
+#define MENU_OPTION_2     "2. Paint House (Sum Except Max)"
+#define MENU_OPTION_3     "3. Check Pair With Sum"
+#define MENU_OPTION_4     "4. Find Unique Element"
+#define MENU_OPTION_5     "5. City Travel"
+#define MENU_OPTION_6     "6. Count Minimum Flips in Binary Array"
+#define MENU_OPTION_7     "7. Geometry Operations"
+#define MENU_OPTION_8     "8. Exit"
+#define ENTER_ARRAY_SIZE     "Enter size of array: "
+#define ENTER_ELEMENTS       "Enter elements: "
+#define ENTER_TARGET_SUM     "Enter target sum: "
+#define ENTER_ENERGY         "Enter initial energy: "
+#define ENTER_BINARY_MSG     "Enter elements (only 0 or 1): "
+#define GEO_START            "\n--- Geometry Operations ---\n"
+#define GEO_RESULTS_HEADER   "\n===== Geometry Results =====\n"
+#define ENTER_POINT1         "Enter coordinates of Point-1 (x1 y1): "
+#define ENTER_POINT2         "Enter coordinates of Point-2 (x2 y2): "
+#define ENTER_CIRCLE_RADIUS  "Enter circle radius: "
+#define ENTER_SQUARE_SIDE    "Enter side length of square: "
+#define ENTER_TRANSLATE      "Enter translate coordinates (newX newY): "
+#define CIRCLE_AREA_LABEL    "Circle Area: "
+#define SQUARE_AREA_LABEL    "Square Area: "
+#define DIST_LABEL           "Distance between points: "
+#define TRANSLATED_LABEL     "Translated Point: "
+#define INVALID_FLOAT        "❌ Invalid input! Enter a valid number: "
+#define POSITIVE_RADIUS_ERR  "❌ Radius must be positive. Enter again: "
+#define POSITIVE_SIDE_ERR    "❌ Side must be positive. Enter again: "
+
+#endif
